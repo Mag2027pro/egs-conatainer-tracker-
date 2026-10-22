@@ -107,7 +107,7 @@ body{
         </div>
     </div>
 
-    <!-- Grille des KPI Globaux (Alignement parfait en 6 colonnes) -->
+    <!-- Grille des KPI Globaux -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
         <div class="kpi-card">
             <div class="text-[11px] uppercase tracking-wider text-slate-400">Jours avec Réception</div>
@@ -134,7 +134,7 @@ body{
         <div class="kpi-card border-amber-400/40 bg-amber-500/10">
             <div class="text-[11px] uppercase tracking-wider text-amber-200">Total Véhicules OUT</div>
             <div id="kpiVehiculesSortis" class="kpi-value text-amber-300">61</div>
-            <div class="text-[12px] text-emerald-400 mt-1 font-semibold">Restant au parc : 08</div>
+            <div class="text-[10px] text-emerald-400 mt-1 font-semibold">Restant au parc : 07</div>
         </div>
     </div>
 
@@ -425,35 +425,36 @@ function afficherKPIMensuels(mensuelMap){
         const neutres = Math.max(0, st.joursTotalSheet - st.joursActifs.size);
         const canvasId = `pieChart_${index++}`;
 
+        // Taille de police augmentée de +10% (ex: texte de 0.75rem à ~0.83rem / text-xs à text-sm)
         html += `
         <div class="month-kpi-card">
-            <div class="text-yellow-300 font-extrabold text-base border-b border-white/10 pb-2 mb-3 flex justify-between items-center">
+            <div class="text-yellow-300 font-extrabold text-base border-b border-white/10 pb-2 mb-3 flex justify-between items-center" style="font-size: 1.1rem;">
                 <span>🗓️ ${st.nomMois}</span>
-                <span class="text-[10px] text-slate-400 font-normal">(${st.joursTotalSheet} jours exploitables)</span>
+                <span class="text-[11px] text-slate-400 font-normal">(${st.joursTotalSheet} jours exploitables)</span>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
-                <!-- Texte des KPI (7 colonnes) -->
-                <div class="md:col-span-7 space-y-2 text-xs">
-                    <div class="flex justify-between"><span class="text-slate-300">Jours avec Réception :</span><span class="font-bold text-cyan-300">${st.joursRecu}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-300">Jours avec Sortie :</span><span class="font-bold text-rose-400">${st.joursSortie}</span></div>
-                    <div class="flex justify-between"><span class="text-slate-300">Jours Neutres (Ni R / Ni S) :</span><span class="font-bold text-slate-400">${neutres}</span></div>
+                <!-- Texte des KPI (7 colonnes) - Taille augmentée de +10% -->
+                <div class="md:col-span-7 space-y-2.5 text-sm" style="font-size: 0.9rem;">
+                    <div class="flex justify-between"><span class="text-slate-300 font-medium">Jours avec Réception :</span><span class="font-bold text-cyan-300 text-base">${st.joursRecu}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-300 font-medium">Jours avec Sortie :</span><span class="font-bold text-rose-400 text-base">${st.joursSortie}</span></div>
+                    <div class="flex justify-between"><span class="text-slate-300 font-medium">Jours Neutres (Ni R / Ni S) :</span><span class="font-bold text-slate-300 text-base">${neutres}</span></div>
                     
-                    <div class="pt-2 border-t border-white/10">
-                        <div class="text-slate-400 font-semibold mb-0.5">Max Conteneurs Reçus :</div>
-                        <div class="font-bold text-amber-300 text-sm">${st.maxRecu.val} | <span class="font-normal text-slate-200 text-xs">${st.maxRecu.date}</span></div>
+                    <div class="pt-2.5 border-t border-white/10">
+                        <div class="text-slate-300 font-semibold mb-0.5">Max Conteneurs Reçus :</div>
+                        <div class="font-bold text-amber-300 text-base">${st.maxRecu.val} | <span class="font-semibold text-white text-xs">${st.maxRecu.date}</span></div>
                     </div>
                     <div class="pt-1">
-                        <div class="text-slate-400 font-semibold mb-0.5">Max Conteneurs Sortis :</div>
-                        <div class="font-bold text-orange-400 text-sm">${st.maxSorti.val} | <span class="font-normal text-slate-200 text-xs">${st.maxSorti.date}</span></div>
+                        <div class="text-slate-300 font-semibold mb-0.5">Max Conteneurs Sortis :</div>
+                        <div class="font-bold text-orange-400 text-base">${st.maxSorti.val} | <span class="font-semibold text-white text-xs">${st.maxSorti.date}</span></div>
                     </div>
                 </div>
 
-                <!-- Graphique en face avec les nombres de conteneurs (5 colonnes) -->
+                <!-- Graphique en face (5 colonnes) -->
                 <div class="md:col-span-5 flex flex-col items-center justify-center bg-slate-900/40 p-3 rounded-xl border border-white/5">
-                    <div class="text-[11px] text-slate-300 font-semibold mb-1 text-center">Total Reçu / Total Sorti</div>
-                    <div class="text-[10px] text-cyan-300 font-bold mb-1">Reçus : ${st.totalRecuMois} | Sortis : ${st.totalSortiMois}</div>
-                    <div style="width: 130px; height: 130px;"><canvas id="${canvasId}"></canvas></div>
+                    <div class="text-xs text-slate-200 font-bold mb-1 text-center">Total Reçu / Total Sorti</div>
+                    <div class="text-[11px] text-cyan-300 font-extrabold mb-1">Reçus : ${st.totalRecuMois} | Sortis : ${st.totalSortiMois}</div>
+                    <div style="width: 135px; height: 135px;"><canvas id="${canvasId}"></canvas></div>
                 </div>
             </div>
         </div>`;
@@ -482,7 +483,7 @@ function afficherKPIMensuels(mensuelMap){
                 plugins: {
                     legend: {
                         position: 'bottom',
-                        labels: { color: '#f5f6f8', boxWidth: 10, font: { size: 10 } }
+                        labels: { color: '#f5f6f8', boxWidth: 11, font: { size: 11, weight: '600' } }
                     },
                     tooltip: {
                         callbacks: {
